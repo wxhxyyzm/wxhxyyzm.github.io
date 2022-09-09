@@ -1,0 +1,113 @@
+<hr>
+<p>title: 友情链接<br>date: 2020-09-19<br>type: “links”<br>layout: “links”<br>comments: true</p>
+<hr>
+<p>模仿一下探探的动画（右滑喜欢左滑不喜欢）这里只做基础动画 可以自己进行进一步的功能增加</p>
+<p>我这里使用的是React进行编写的总体思路不变</p>
+<hr>
+<p>我们首先思考所需要什么</p>
+<ol>
+<li>跟随手指滑动（onTouchMove,onTouchStart,onTouchEnd）</li>
+<li>松手自动离开或者复原（动画 transform ）</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/duogongneng/OneMyBlogImg@master/1540713-cb62427e7fde2680.gif"></p>
+<h3 id="移动onTouch"><a href="#移动onTouch" class="headerlink" title="移动onTouch"></a>移动onTouch</h3><p>我们只需要实时进行改变它的位置即可 </p>
+<p>我们需要三个监听事件分别为 手指按下 手指移动 手指移开</p>
+<pre><code>&lt;View className=&quot;div1&quot;&gt;
+      &lt;View className=&quot;div2&quot;
+          onTouchEnd={(e)=&gt;{
+              // 手指移开
+            touchEnd(e)
+          }}
+          onTouchMove={(e)=&gt;{
+              // 手指移动
+            touchmove(e)
+          }}
+          onTouchStart={(e)=&gt;{
+              // 手指按下
+            touchStart(e)
+          }}
+      &gt;&lt;/View&gt;
+&lt;/View&gt;
+</code></pre>
+<h4 id="手指按下onTouchStart"><a href="#手指按下onTouchStart" class="headerlink" title="手指按下onTouchStart"></a>手指按下onTouchStart</h4><p>手指按下那一刻我们需要做的事情比较少我们只需要记录当前位置即可</p>
+<pre><code>let touchStart = (event)=&gt;{
+    let {changedTouches} = event
+    let {clientX,clientY} = changedTouches[0]
+    setStartx(clientX)
+    setStarty(clientY)
+    setEndx(clientX)
+    setEndy(clientY)
+}
+</code></pre>
+<p>我们记录下当前的 X，Y的坐标后就是开始移动了这里我们需要做的东西较多</p>
+<h4 id="手指移动onTouchMove"><a href="#手指移动onTouchMove" class="headerlink" title="手指移动onTouchMove"></a>手指移动onTouchMove</h4><p>我们需要实时更新手指移动的坐标并且更新到div元素上面</p>
+<pre><code>let [poswidth,setPoswidth] = useState(0)
+let [posheight,setPosheight] = useState(0)
+let touchmove = (event)=&gt;{
+    let {changedTouches} = event
+    let {clientX,clientY} = changedTouches[0]
+    setEndx(clientX)
+    setEndy(clientY)
+    setPoswidth(endx-startx)
+    setPosheight(endy-starty)
+ }
+</code></pre>
+<p>我们记录了手指移动的坐标并且实时的更新变量了 但是你会发现我们并没有把参数更新到div元素上面</p>
+<p>我们编写一个方法实时计算css transform 并赋值到div元素上面</p>
+<pre><code>let transformIndex =  (color) =&gt; {
+    // 处理3D效果
+    let style = {};
+    style[&#39;transform&#39;] = &#39;translate3D(&#39; + poswidth + &#39;px&#39; + &#39;,&#39; + posheight + &#39;px&#39; + &#39;,0px)&#39;+ &#39;rotate(&#39; + dxangle + &#39;deg)&#39;;
+    style[&#39;opacity&#39;] = 1;
+    style[&#39;zIndex&#39;] = 10;
+    style[&#39;box-shadow&#39;] = &#39;0px 1px 20px 0px rgba(0,0,0,0.1)&#39;;
+    style[&#39;background&#39;] = color;
+    // 这里是 是否启动动画效果
+    if(animation){
+      style[&#39;transitionTimingFunction&#39;] = &#39;ease&#39;;
+      style[&#39;transitionDuration&#39;] = 400 + &#39;ms&#39;;
+    }
+    console.log(&#39;style1&#39;, style);
+    return style;
+  }
+</code></pre>
+<p>然后我们div就应该变成</p>
+<pre><code>&lt;View className=&quot;div1&quot;&gt;
+      &lt;View className=&quot;div2&quot;
+          onTouchEnd={(e)=&gt;{
+            touchEnd(e)
+          }}
+          onTouchMove={(e)=&gt;{
+            touchmove(e)
+          }}
+          onTouchStart={(e)=&gt;{
+            touchStart(e)
+          }}
+          style={transformIndex()}
+      &gt;&lt;/View&gt;
+&lt;/View&gt;
+</code></pre>
+<p>然后就可以跟随手指进行变动了</p>
+<p>最后一个就是当我们手指松开的时候</p>
+<h4 id="手指移开onTouchEnd"><a href="#手指移开onTouchEnd" class="headerlink" title="手指移开onTouchEnd"></a>手指移开onTouchEnd</h4><p>我们可以在这里做很多操作 当他松开的的时候我们是将div元素动画移动走还是回到原来的位置</p>
+<p>这里你可以有自己的想法</p>
+<pre><code>let touchEnd = (event)=&gt;{
+    if (Math.abs(poswidth) &gt;= 79) {
+      let ratio = Math.abs(posheight / poswidth);
+      setPoswidth(poswidth &gt;= 0 ? poswidth + 500 : poswidth - 500)
+      setPosheight(posheight &gt;= 0 ? Math.abs(poswidth * ratio) : -Math.abs(poswidth * ratio))
+    }else{
+      setPoswidth(0)
+      setPosheight(0)
+    }
+  }
+</code></pre>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这里只是一个基础的结构 基本的思路</p>
+<p>但是万变不离其宗啊～ </p>
+<p>在探探中其实他还有个角度这个需要大家发挥思路自行解决一下</p>
+<p>思考：</p>
+<ol>
+<li>为什么手指点上的时候div 没有让左上角移动到我手指的地方</li>
+<li>animation 启动动画哪里是做什么用的自行完善下</li>
+<li>如何让多个叠加起来？</li>
+</ol>
