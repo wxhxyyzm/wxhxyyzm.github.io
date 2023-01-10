@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Ahh"><title>数学建模笔记-多元回归分析 · Ahh's blog</title><meta name="description" content="回归分析的笔记01
+
+
+ 概念
+回归分析：研究X和Y的相关性分析
+
+
+相关性不是因果性
+统计数据可以说明：游泳死亡人数越高，雪糕卖的越多。（两者呈显著正相关）
+但是不能说 吃雪糕会增加游泳死亡风险 背后的原因应该是天气热 所以相关性不是因果性 在大部分情况下都不能直接说是因果性
+
+
+Y是因变量 是我"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/KaTeX/0.10.2/katex.min.css" rel="stylesheet"><meta name="generator" content="Hexo 6.2.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/pic.jpg"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/pic.jpg" style="width:220px;" alt="favicon"><h3 title=""><a href="/">Ahh's blog</a></h3><div class="description"><p>程序员对世界说，我学编程都是为了你好</p></div></div><ul class="social-links"><li><a href="mailto:wxhxyyzm@163.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://weibo.com/u/3042191792"><i class="fa fa-weibo"></i></a></li><li><a target="_blank" rel="noopener" href="https://weibo.com/u/3042191792"><i class="fa fa-douban"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#%E6%A6%82%E5%BF%B5"><span class="toclist-number">1.</span> <span class="toclist-text"> 概念</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E7%9A%84%E4%BD%BF%E5%91%BD"><span class="toclist-number">1.1.</span> <span class="toclist-text"> 回归分析的使命</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toclist-number">1.2.</span> <span class="toclist-text"> 回归分析的分类</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toclist-number">1.3.</span> <span class="toclist-text"> 数据的分类</span></a></li></ol></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#%E5%85%B7%E4%BD%93%E7%B1%BB%E5%88%AB%E7%9A%84%E5%AD%A6%E4%B9%A0"><span class="toclist-number">2.</span> <span class="toclist-text"> 具体类别的学习</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="toclist-number">2.1.</span> <span class="toclist-text"> 线性回归</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-4"><a class="toclist-link" href="#%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="toclist-number">2.1.1.</span> <span class="toclist-text"> 一元线性回归</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-5"><a class="toclist-link" href="#%E5%9B%9E%E5%BD%92%E7%B3%BB%E6%95%B0%E7%9A%84%E8%A7%A3%E9%87%8A"><span class="toclist-number">2.1.1.1.</span> <span class="toclist-text"> 回归系数的解释</span></a></li></ol></li></ol></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> Ahh</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>数学建模笔记-多元回归分析</a></h3></div><div class="post-content"><p><p>回归分析的笔记01</p>
+<span id="more"></span>
+<!-- toc -->
+<h2 id="概念"><a class="markdownIt-Anchor" href="#概念"></a> 概念</h2>
+<p>回归分析：研究X和Y的相关性分析</p>
+<ol>
+<li>
+<p>相关性不是因果性<br>
+统计数据可以说明：游泳死亡人数越高，雪糕卖的越多。（两者呈显著正相关）<br>
+但是不能说 吃雪糕会增加游泳死亡风险 背后的原因应该是天气热 所以相关性不是因果性 在大部分情况下都不能直接说是因果性</p>
+</li>
+<li>
+<p>Y是因变量 是我们研究的核心变量 -因为别人的改变而改变的变量<br>
+连续性指数变量 -GDP -线性回归<br>
+0-1型变量 -对错<br>
+定序变量 -1表示非常不喜欢 5表示非常喜欢<br>
+计数变量 -一段时间内客户到访的次数<br>
+生存变量 -有截断的数据 比如人的年龄60+</p>
+</li>
+<li>
+<p>X是自变量<br>
+回归分析的任务就是，通过研究X和Y的关系，尝试去解释Y的形成机制，从而达到通过X去预测Y的目的。</p>
+</li>
+</ol>
+<h3 id="回归分析的使命"><a class="markdownIt-Anchor" href="#回归分析的使命"></a> 回归分析的使命</h3>
+<ol>
+<li>识别重要变量 不是所有变量都是有用的 逐步回归法</li>
+<li>判断相关性的方向 正相关or负相关</li>
+<li>要估计权重（回归系数） 去量纲处理 影响的大小</li>
+</ol>
+<h3 id="回归分析的分类"><a class="markdownIt-Anchor" href="#回归分析的分类"></a> 回归分析的分类</h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>模型</th>
+<th>Y的特点</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>线性回归</td>
+<td>OLS,GLS</td>
+<td>连续数值型变量</td>
+<td>GDP</td>
+</tr>
+<tr>
+<td><em>0-1回归</em></td>
+<td>logistics回归</td>
+<td>0-1变量</td>
+<td>是否会违约</td>
+</tr>
+<tr>
+<td>定序回归</td>
+<td>probit定序回归</td>
+<td>定序变量</td>
+<td>等级评定 优良差</td>
+</tr>
+<tr>
+<td>计数回归</td>
+<td>泊松回归</td>
+<td>计数变量</td>
+<td>每分钟车流量</td>
+</tr>
+<tr>
+<td>生存回归</td>
+<td>Cox等比例风险回归</td>
+<td>生存变量（截断数据）</td>
+<td>企业、产品的寿命</td>
+</tr>
+</tbody>
+</table>
+<h3 id="数据的分类"><a class="markdownIt-Anchor" href="#数据的分类"></a> 数据的分类</h3>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>常见建模方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>横截面数据</td>
+<td>多元线性回归</td>
+</tr>
+<tr>
+<td>时间序列数据</td>
+<td>移动平均、指数平滑、ARIMA、GARCH、VAR、协积</td>
+</tr>
+<tr>
+<td>面板数据</td>
+<td>固定效应和随机效应、静态面板和动态面板</td>
+</tr>
+</tbody>
+</table>
+<p>横截面数据：在某一时点收集的不同对象的数据<br>
+例如：发放问卷得到的数据、各省份GDP的数据、大一新生今年体测得到的数据</p>
+<p>时间序列数据：同一对象在不同时间连续观察所得到的数据<br>
+例如：每年生日的体重数据、中国历年来的GDP、在某地方每隔一小时测得的数据</p>
+<p>面板数据：上面两者的综合<br>
+例如：2008-2018年，我国各省份GDP的数据</p>
+<h2 id="具体类别的学习"><a class="markdownIt-Anchor" href="#具体类别的学习"></a> 具体类别的学习</h2>
+<h3 id="线性回归"><a class="markdownIt-Anchor" href="#线性回归"></a> 线性回归</h3>
+<h4 id="一元线性回归"><a class="markdownIt-Anchor" href="#一元线性回归"></a> 一元线性回归</h4>
+<p>一元线性函数拟合-散点图-找最合适的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mi>k</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">y=kx+b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>- <mark>最小二乘法</mark></p>
+<p>假设x是自变量，y是因变量，且满足如下线性关系：$$y_{i}=\beta_{0}+\beta_{1}x_{i}+\mu_{i}$$<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>β</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">\beta_{0}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>β</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">\beta_{1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为回归系数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>μ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\mu_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为无法观测的且满足一定条件的扰动项。<br>
+令预测值$$\widehat{y_{i}}=\widehat{\beta_{0}}+\widehat{\beta_{1}}x_{i}$$<br>
+可以直接把预测值想象成拟合值</p>
+<img src="/2023/01/10/%E5%A4%9A%E5%85%83%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90/01/10/%E5%A4%9A%E5%85%83%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90/%E7%BA%BF%E6%80%A71.png" class title="没有描述">
+<center><font size="4"> 将优化问题转化为残差平方和最小 </font></center>
+<p><strong>线性</strong>的概念 并不要求严格的线性关系，自变量和因变量可通过变量替换而转化成线性模型。<br>
+比如：lnx-&gt;z x+y-&gt;z <strong>换元思想</strong><br>
+所以需要对数据进行预处理 用Excel、matlab、stata等</p>
+<h5 id="回归系数的解释"><a class="markdownIt-Anchor" href="#回归系数的解释"></a> 回归系数的解释</h5>
+<p>假设x为某产品品质评分（连续数值），y为产品销量，现在对y和x进行一元线性回归。<br>
+如果得到结果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><msub><mi>y</mi><mi>i</mi></msub><mo stretchy="true">^</mo></mover><mo>=</mo><mn>3.4</mn><mo>+</mo><mn>2.3</mn><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\widehat{y_{i}}=3.4+2.3x_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.865em;vertical-align:-0.19444em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.67056em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span class="svg-align" style="top:-3.43056em;"><span class="pstrut" style="height:3em;"></span><span style="height:0.24em;"><svg width="100%" height="0.24em" viewbox="0 0 1062 239" preserveaspectratio="none"><path d="M529 0h5l519 115c5 1 9 5 9 10 0 1-1 2-1 3l-4 22
+c-1 5-5 9-11 9h-2L532 67 19 159h-2c-5 0-9-4-11-9l-5-22c-1-6 2-12 8-13z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">3</span><span class="mord">.</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">3</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，其中：</p>
+<ul>
+<li>3.4：在评分为0时，该产品的<em>平均销量</em>为3.4</li>
+<li>2.3：评分每增加一个单位，该产品的<em>平均销量</em>增加2.3</li>
+</ul>
+<p>如果现在有两个自变量，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_{1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>表示品质控分，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>表示该产品的价格，得到回归模型为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><msub><mi>y</mi><mi>i</mi></msub><mo stretchy="true">^</mo></mover><mo>=</mo><mn>5.3</mn><mo>+</mo><mn>0.19</mn><msub><mi>x</mi><mrow><mn>1</mn><mi>i</mi></mrow></msub><mo>−</mo><mn>1.74</mn><msub><mi>x</mi><mrow><mn>2</mn><mi>i</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\widehat{y_{i}}=5.3+0.19x_{1i}-1.74x_{2i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.865em;vertical-align:-0.19444em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.67056em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span class="svg-align" style="top:-3.43056em;"><span class="pstrut" style="height:3em;"></span><span style="height:0.24em;"><svg width="100%" height="0.24em" viewbox="0 0 1062 239" preserveaspectratio="none"><path d="M529 0h5l519 115c5 1 9 5 9 10 0 1-1 2-1 3l-4 22
+c-1 5-5 9-11 9h-2L532 67 19 159h-2c-5 0-9-4-11-9l-5-22c-1-6 2-12 8-13z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mord">.</span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">1</span><span class="mord">9</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.79444em;vertical-align:-0.15em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">7</span><span class="mord">4</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，其中：</p>
+<ul>
+<li>5.3：在评分为0且价格为0时，平均销量为5.3。（实际情况下价格不可能为0，所以没有现实意义，写论文可以不写截距项）</li>
+<li>0.19：在其他变量不变时，评分每增加一个单位，该产品的平均销量增加0.19</li>
+<li>1.74同理可解释<br>
+对比可知，在引入了新的自变量价格之后，对回归系数的<mark>影响非常大</mark>，从3.4变成2.3</li>
+</ul>
+<p><font size="5" color="blue">原因：遗漏变量导致的内生性 </font></p>
+<blockquote>
+<p>内生性的探究<br>
+假设一个模型有k个自变量，其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>μ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\mu_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为扰动项，如果满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>μ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\mu_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>和所有的自变量x都不相关，则称该回归模型具有外生性，反正则存在内生性，内生性会导致回归系数估计的不准确：不满足无偏(计算期望值，可以理解为代表性)和一致性(计算极限，排除n的大小)</p>
+</blockquote>
+<p>所以在之前的例子中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>μ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\mu_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">μ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>包含了所有与y相关，但位添加到回归模型中的变量，如果这些变量与已经添加的自变量相关（例子中价格和销量相关），则存在内生性。</p>
+</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-10</span><i class="fa fa-tag"></i><a class="tag" href="/tags/note/" title="note">note </a><i class="fa fa-tag"></i><a class="tag" href="/tags/数学建模/" title="数学建模">数学建模 </a><span class="leancloud_visitors"></span><span>大约1408个字, 4分钟41秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxhxyyzm.github.io/2023/01/10/多元回归分析/,Ahh's blog,数学建模笔记-多元回归分析,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/2023/01/04/problem01/" title="problem01">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'H0VO204MWoxwKbBGEHeez2oX-gzGzoHsz',
+  app_key:'hFyVWhXHYgVmaKMGWHzhEZcZ',
+  placeholder:'Ahh终于更新了',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'retro'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(无标题)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div><script src="/js/baidu-tongji.js"></script></body></html>
