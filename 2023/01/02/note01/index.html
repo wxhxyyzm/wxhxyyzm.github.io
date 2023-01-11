@@ -12,52 +12,52 @@ test.java -&amp;gt; test.calss -&amp;gt; linux/windows
 <h2 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h2>
 <p>1.Java是面向对象的</p>
 <p>2.Java是健壮的</p>
-<p>3.Java是跨平台的<br />
-test.java -&gt; test.calss -&gt; linux/windows<br />
+<p>3.Java是跨平台的<br>
+test.java -&gt; test.calss -&gt; linux/windows<br>
 一个编译好的.class文件可以在多个系统下运行</p>
-<p>4.Java是解释性语言<br />
-解释性语言：js，php，java -不能被机器直接执行，需要解释器<br />
+<p>4.Java是解释性语言<br>
+解释性语言：js，php，java -不能被机器直接执行，需要解释器<br>
 编译性语言：C/C++ -可以被机器直接执行</p>
 <h2 id="配置"><a class="markdownIt-Anchor" href="#配置"></a> 配置</h2>
 <h3 id="jvm"><a class="markdownIt-Anchor" href="#jvm"></a> JVM</h3>
-<p>Java核心运行机制 -JVM<br />
-1.JVM是一个虚拟的计算机，具有指令集并使用不同的存储区域。负责执行指令，管理数据、内存、寄存器，包含在JDK中。<br />
-2.不同的平台有不同的虚拟机。<br />
+<p>Java核心运行机制 -JVM<br>
+1.JVM是一个虚拟的计算机，具有指令集并使用不同的存储区域。负责执行指令，管理数据、内存、寄存器，包含在JDK中。<br>
+2.不同的平台有不同的虚拟机。<br>
 3.Java虚拟机机制屏蔽了底层运行平台的差别，实现了“一次编译，到处运行”。</p>
 <h3 id="jdk"><a class="markdownIt-Anchor" href="#jdk"></a> JDK</h3>
 <p>JDK=JRE+Java开发工具（javac,javadoc）</p>
 <p>JRE=JVM+Java核心类库</p>
 <p>开发者需要JDK，使用者只需要JRE就可以运行</p>
 <h3 id="环境搭建"><a class="markdownIt-Anchor" href="#环境搭建"></a> 环境搭建</h3>
-<p>去官网下载JDK<br />
-然后改环境变量<br />
-步骤<br />
-1.增加JAVA_HOME的环境变量，指向路径<br />
+<p>去官网下载JDK<br>
+然后改环境变量<br>
+步骤<br>
+1.增加JAVA_HOME的环境变量，指向路径<br>
 2.增加%JAVA_HOME%\bin</p>
 <h2 id="第一个程序"><a class="markdownIt-Anchor" href="#第一个程序"></a> 第一个程序</h2>
 <p>1.新建hello.java文件</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.表示hello是一个公有类</span></span><br><span class="line"><span class="comment">//2.public static void main(String[] args)是程序执行的入口</span></span><br><span class="line"><span class="comment">//3.System.out.println 表示输出</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">hello</span> &#123;</span><br><span class="line">    <span class="comment">//编写一个main方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello, World!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>2.编译源文件<br />
-从该路径下打开cmd 输入：javac hello.java 进行编译<br />
+<p>2.编译源文件<br>
+从该路径下打开cmd 输入：javac hello.java 进行编译<br>
 如果报错注意是不是文件编码问题 GBK/UTF-8</p>
-<p>3.运行<br />
-生成hello.class之后 输入：java hello.java<br />
+<p>3.运行<br>
+生成hello.class之后 输入：java hello.java<br>
 运行的本质就是将class文件（字节码文件）装载到对应的JAM中进行执行</p>
 <h3 id="细节说明"><a class="markdownIt-Anchor" href="#细节说明"></a> 细节说明</h3>
-<p>1.Java源文件拓展名：.java 基本组成部分是类<br />
-2.Java程序执行入口是main()<br />
+<p>1.Java源文件拓展名：.java 基本组成部分是类<br>
+2.Java程序执行入口是main()<br>
 固定书写格式：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;...&#125;</span><br></pre></td></tr></table></figure>
-<p>3.大小写，分号，大括号等语言细节<br />
-4.编译后每一个类都有一个.class文件<br />
-5.如果源文件中有public类，那么文件名<strong>必须以此public类命名</strong><br />
+<p>3.大小写，分号，大括号等语言细节<br>
+4.编译后每一个类都有一个.class文件<br>
+5.如果源文件中有public类，那么文件名<strong>必须以此public类命名</strong><br>
 6.一个源文件中最多只有一个public类，其他类个数不限，但可以将main写在非public中，然后指定非public类，这样入口方法就是非public的main方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">hello</span> &#123;</span><br><span class="line">    <span class="comment">//编写一个main方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Alice is studying java!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">tired</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;好困&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">time</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;22:56&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>命令行：</p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">D:\<span class="title">ABOUT</span>\<span class="title">Java</span>&gt;<span class="title">javac</span> <span class="title">hello.java</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">ABOUT</span>\<span class="title">Java</span>&gt;<span class="title">java</span> <span class="title">tired</span></span></span><br><span class="line"><span class="function">好困</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">D</span>:\<span class="title">ABOUT</span>\<span class="title">Java</span>&gt;<span class="title">java</span> <span class="title">time</span></span></span><br><span class="line"><span class="function">22:56</span></span><br></pre></td></tr></table></figure>
 <h3 id="转义字符"><a class="markdownIt-Anchor" href="#转义字符"></a> 转义字符</h3>
-<p>\t \n \ &quot; ’<br />
-\r-回车<br />
+<p>\t \n \ &quot; ’<br>
+\r-回车<br>
 这块和其他语言也一样 不细写了</p>
 </p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-02</span><i class="fa fa-tag"></i><a class="tag" href="/tags/note/" title="note">note </a><i class="fa fa-tag"></i><a class="tag" href="/tags/Java/" title="Java">Java </a><span class="leancloud_visitors"></span><span>大约695个字, 2分钟19秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxhxyyzm.github.io/2023/01/02/note01/,Ahh's blog,Java-note01,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2023/01/04/note02/" title="Java-note02">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2022/12/20/holiday1/" title="holiday1">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
   el:'#vcomments',
