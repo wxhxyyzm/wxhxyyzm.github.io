@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Ahh"><title>数学建模笔记-聚类模型 · Ahh's blog</title><meta name="description" content="分类已知类别，聚类未知类别。
+
+
+ 概念
+聚类，就是将样本划分为由类似的对象组成的多个类的过程。
+聚类后，我们可以更加准确的在每个类中单独使用统计模型进行估计、分析或预测；也可以探究不同类之间的相关性和主要差异。
+ K-means
+
+指定需要划分的簇[cù]的个数K值（类的个数）;
+随机地选择K个数"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/KaTeX/0.10.2/katex.min.css" rel="stylesheet"><meta name="generator" content="Hexo 6.2.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/pic.jpg"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/pic.jpg" style="width:220px;" alt="favicon"><h3 title=""><a href="/">Ahh's blog</a></h3><div class="description"><p>程序员对世界说，我学编程都是为了你好</p></div></div><ul class="social-links"><li><a href="mailto:wxhxyyzm@163.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://weibo.com/u/3042191792"><i class="fa fa-weibo"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#%E6%A6%82%E5%BF%B5"><span class="toclist-number">1.</span> <span class="toclist-text"> 概念</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#k-means"><span class="toclist-number">2.</span> <span class="toclist-text"> K-means</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#k-means-2"><span class="toclist-number">2.1.</span> <span class="toclist-text"> K-means++</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#spss%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="toclist-number">2.2.</span> <span class="toclist-text"> SPSS操作步骤</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E8%AE%A8%E8%AE%BA"><span class="toclist-number">2.3.</span> <span class="toclist-text"> 讨论</span></a></li></ol></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#%E7%B3%BB%E7%BB%9F%E5%B1%82%E6%AC%A1%E8%81%9A%E7%B1%BB"><span class="toclist-number">3.</span> <span class="toclist-text"> 系统（层次）聚类</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#dbscan%E7%AE%97%E6%B3%95"><span class="toclist-number">4.</span> <span class="toclist-text"> DBSCAN算法</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#%E6%80%BB%E7%BB%93"><span class="toclist-number">5.</span> <span class="toclist-text"> 总结</span></a></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> Ahh</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.13.8/mermaid.min.js"></script></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>数学建模笔记-聚类模型</a></h3></div><div class="post-content"><p><p>分类已知类别，聚类未知类别。</p>
+<span id="more"></span>
+<!-- toc -->
+<h2 id="概念"><a class="markdownIt-Anchor" href="#概念"></a> 概念</h2>
+<p>聚类，就是将样本划分为由类似的对象组成的多个类的过程。<br />
+聚类后，我们可以更加准确的在每个类中单独使用统计模型进行估计、分析或预测；也可以探究不同类之间的相关性和主要差异。</p>
+<h2 id="k-means"><a class="markdownIt-Anchor" href="#k-means"></a> K-means</h2>
+<ol>
+<li>指定需要划分的簇[cù]的个数K值（类的个数）;</li>
+<li>随机地选择K个数据对象作为初始的聚类中心（不一定要是我们的样本点）</li>
+<li>计算其余的各个数据对象<strong>到这K个初始聚类中心的距离</strong>，把数据对象划归到距离它最近的那个中心所处在的簇类中;</li>
+<li>调整新类并且重新计算出新类的中心;</li>
+<li>循环步骤3和4，看中心是否收敛（不变），如果收敛或达到迭代次数则停止循环;</li>
+<li>结束。</li>
+</ol>
+<center><img src="https://img-blog.csdnimg.cn/70c2331e53f548bfa7098fceb076fce2.png " width="50%"></center>
+<p>优点：简单、迅速、对处理大数据集高效率。<br />
+缺点：要求用户必须给出K、对初值敏感（最终聚类效果和一开始选择的聚类中心有很大的关系）、对于孤立点数据敏感。</p>
+<p>改进：K-means++算法可以解决缺点2和3</p>
+<h3 id="k-means-2"><a class="markdownIt-Anchor" href="#k-means-2"></a> K-means++</h3>
+<p>只对K-menas里“初始化K个聚类中心”进行了优化：</p>
+<ol>
+<li>随机选择一个样本作为第一个聚类中心；</li>
+<li>计算每个样本与当前已有聚类中心的最短距离（即与最近一个聚类中心的距离），这个值越大，表示被选取作为聚类中心的概率较大；最后，用轮盘法（依据概率大小来进行抽选）选出下一个聚类中心；</li>
+<li>重复步骤2，直到选出K个聚类中心。选出初始点后，就继续使用标准的K-means算法了。</li>
+</ol>
+<p>基本原则：初始的聚类中心之间的相互距离要尽可能的远。</p>
+<h3 id="spss操作步骤"><a class="markdownIt-Anchor" href="#spss操作步骤"></a> SPSS操作步骤</h3>
+<p>K-means（默认使用K-means++）:</p>
+<pre class="mermaid">graph LR
+A[分析] --> B(分类) --> C(K-均值聚类) 
+C--> D(放入变量) 
+C--> E(写入K) 
+C--> F(迭代:更改N) 
+C--> G(保存:勾选聚类成员和与聚类中心的距离)
+C--> H(选项:勾选初始聚类中心和每个个案的聚类信息)</pre>
+<h3 id="讨论"><a class="markdownIt-Anchor" href="#讨论"></a> 讨论</h3>
+<ol>
+<li>聚类的个数K值怎么定？<br />
+答：分几类主要取决于个人的经验与感觉，通常的做法是多尝试几个K值，看分成几类的结果更好解释，更符合分析目的等。</li>
+<li>数据的量纲不一致怎么办？<br />
+答：如果数据的量纲不一样，那么算距离时就没有意义。例如：如果X1单位是米，X2单位是吨，用距离公式计算就会出现“米的平方”加上“吨的平方”再开平方，最后算出的东西没有数学意义，这就有问题了，需要计算标准值。</li>
+</ol>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>z</mi><mi>i</mi></msub><mo>=</mo><mfrac><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>−</mo><mover accent="true"><mi>x</mi><mo>ˉ</mo></mover></mrow><msub><mi>σ</mi><mi>x</mi></msub></mfrac><mtext>(先减去均值再除以标准差)</mtext></mrow><annotation encoding="application/x-tex">z_{i}=\frac{x_{i}-\bar{x}}{\sigma_{x}}\text{(先减去均值再除以标准差)}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.09633em;vertical-align:-0.8360000000000001em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.2603300000000002em;"><span style="top:-2.3139999999999996em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">σ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.56778em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">x</span></span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.22222em;">ˉ</span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8360000000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mord text"><span class="mord">(</span><span class="mord cjk_fallback">先减去均值再除以标准差</span><span class="mord">)</span></span></span></span></span></span></p>
+<p>SPSS操作：</p>
+<pre class="mermaid">graph LR
+B(分析) --> C(描述统计) --> D(描述)-->E(勾选将标准化值另存为变量)</pre>
+<h2 id="系统层次聚类"><a class="markdownIt-Anchor" href="#系统层次聚类"></a> 系统（层次）聚类</h2>
+<p>绝对值距离  (网格)<br />
+欧氏距离  (常用)</p>
+<center><img src="https://img-blog.csdnimg.cn/edb98173807440cb823bba9f3d8d8223.png" width="50%"></center>
+<p>SPSS操作：</p>
+<pre class="mermaid">graph LR
+A[分析] --> B(分类) --> C(系统聚类) 
+C--> D(放入变量) 
+C--> E(图:勾选谱系图)-->E1(根据聚合系数确定要分几类并说明) 
+C--> F(方法:一般保持默认就可以) 
+C--> G(统计与保存:可以更改分几类)</pre>
+<h2 id="dbscan算法"><a class="markdownIt-Anchor" href="#dbscan算法"></a> DBSCAN算法</h2>
+<p>基于密度的聚类方法 用的很少</p>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>一般情况下还是用系统聚类 只有两个指标且作图发现很DBSCAN时再用DBSCAN聚类</p>
+</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-01-21</span><i class="fa fa-tag"></i><a class="tag" href="/tags/note/" title="note">note </a><i class="fa fa-tag"></i><a class="tag" href="/tags/数学建模/" title="数学建模">数学建模 </a><span class="leancloud_visitors"></span><span>大约1045个字, 3分钟29秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxhxyyzm.github.io/2023/01/21/聚类/,Ahh's blog,数学建模笔记-聚类模型,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2023/01/26/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/" title="数学建模笔记-时间序列">上一篇</a></li><li class="next pagbuttons"><a class="btn" role="navigation" href="/2023/01/18/%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98/" title="数学建模笔记-分类模型">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'H0VO204MWoxwKbBGEHeez2oX-gzGzoHsz',
+  app_key:'hFyVWhXHYgVmaKMGWHzhEZcZ',
+  placeholder:'Ahh终于更新了',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'retro'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(无标题)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>
