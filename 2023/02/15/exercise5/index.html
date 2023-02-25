@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Ahh"><title>exercise5 · Ahh's blog</title><meta name="description" content="2.13-2.17训练题解 记录不会的或者WA的地方
+
+
+ DZY Loves Sequences
+传送门：446A
+题意：给一个长度为n的数列，求一个子段，最多改变当中的一个值，使得子段为严格单调增，求子段的最大长度。
+求解：最长上升子序列就是一个简单dp
+1234if(a[i]&amp;gt;a[i-1"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/KaTeX/0.10.2/katex.min.css" rel="stylesheet"><meta name="generator" content="Hexo 6.2.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/pic.jpg"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/pic.jpg" style="width:220px;" alt="favicon"><h3 title=""><a href="/">Ahh's blog</a></h3><div class="description"><p>程序员对世界说，我学编程都是为了你好</p></div></div><ul class="social-links"><li><a href="mailto:wxhxyyzm@163.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://weibo.com/u/3042191792"><i class="fa fa-weibo"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#dzy-loves-sequences"><span class="toclist-number">1.</span> <span class="toclist-text"> DZY Loves Sequences</span></a></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#dzy-loves-modification"><span class="toclist-number">2.</span> <span class="toclist-text"> DZY Loves Modification</span></a></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> Ahh</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.13.8/mermaid.min.js"></script></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>exercise5</a></h3></div><div class="post-content"><p><p>2.13-2.17训练题解 记录不会的或者WA的地方</p>
+<span id="more"></span>
+<!-- toc -->
+<h2 id="dzy-loves-sequences"><a class="markdownIt-Anchor" href="#dzy-loves-sequences"></a> DZY Loves Sequences</h2>
+<p>传送门：<a target="_blank" rel="noopener" href="https://codeforces.com/contest/446/problem/A">446A</a><br />
+题意：给一个长度为n的数列，求一个子段，最多改变当中的一个值，使得子段为严格单调增，求子段的最大长度。<br />
+求解：最长上升子序列就是一个简单dp</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(a[i]&gt;a[i<span class="number">-1</span>])</span><br><span class="line">  &#123;</span><br><span class="line">   b[i]=b[i<span class="number">-1</span>]+<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>一开始的想法是遍历一遍，遇到<code>b[i]==1</code>先判断一下前后两段能不能接起来，如果可以就在原来的基础上+1.<br />
+这样写的问题是，没法控制只加一次，本质上就是贪心想法错了。<br />
+后来的改进是不从头开始遍历，当成一段一段处理，记录上一段的长度，然后假设可以接起来，每一段都判断一下，最后求最大值。<br />
+还遇到的问题是：<br />
+1.最后一段的处理在循环的外面，要记得最后写一下。<br />
+2.如果每一段都不能接起来，那就是最长上升子序列的长度+1。<br />
+3.需要判断两段可以接起来的长度与最长上升子序列的长度+1哪个更大<br />
+4.存在原数列就是严格单调增的情况，这样答案就是原数列的长度。</p>
+<h2 id="dzy-loves-modification"><a class="markdownIt-Anchor" href="#dzy-loves-modification"></a> DZY Loves Modification</h2>
+<p>传送门：<a target="_blank" rel="noopener" href="https://codeforces.com/contest/446/problem/B">446B</a><br />
+题意：输入一个<code>n*m</code>的矩阵，k值和p值，对一个矩阵进行恰好k次操作，k操作有两种选择：1.选择矩阵的某行并将行的每个元素减少p。此操作带来快乐值，该值等于减少前行元素的总和。2.选择矩阵的某列并将列的每个元素减少p。此操作带来快乐值，该值等于减少前行元素的总和。<br />
+求可以获得的最大快乐总价值<br />
+求解：行和列是相互影响的，所以不能用两个优先队列最大的来贪心。<br />
+能够发现，其实先选行，再选列与先选列，再选行没有任何区别,选i行，k-i列，最后都是<code>-p*i*k-i</code><br />
+因此只要枚举选i个行，k-i个列，用优先队列存储一下每次操作之后行/列，最后取最大值即可。<br />
+问题：<br />
+1.超时！记得加<code>ios::sync_with_stdio(0);cin.tie(0);</code><br />
+2.不开long long见祖宗<br />
+3.数组的范围要注意</p>
+</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-02-15</span><i class="fa fa-tag"></i><a class="tag" href="/tags/acm/" title="acm">acm </a><i class="fa fa-tag"></i><a class="tag" href="/tags/一周题解/" title="一周题解">一周题解 </a><span class="leancloud_visitors"></span><span>大约643个字, 2分钟8秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxhxyyzm.github.io/2023/02/15/exercise5/,Ahh's blog,exercise5,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/2023/01/26/%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97/" title="数学建模笔记-时间序列">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'H0VO204MWoxwKbBGEHeez2oX-gzGzoHsz',
+  app_key:'hFyVWhXHYgVmaKMGWHzhEZcZ',
+  placeholder:'Ahh终于更新了',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'retro'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(无标题)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>
