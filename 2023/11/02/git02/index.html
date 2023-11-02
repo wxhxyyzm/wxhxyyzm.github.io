@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="referrer" content="no-referrer"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Ahh"><title>博客遗留问题+GitHub仓库管理问题 · Ahh's blog</title><meta name="description" content="乱七八糟的问题们
+
+ 写在最前面-遗留问题
+笑死，博客又很久不更新了，最近在写一个web的作业，想着要不放到GitHub上去吧，把git又拾起来看一下。然后更新网页的时候忘记博客怎么上传了。。。
+想了很久，想起来原来我是建立在hexo上的啊！（甚至忘了当时怎么建站的了…看来笔记还是很重要的）不是gi"><meta name="keywords" content="Blog,博客,Hexo"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="shortcut icon" type="image/x-icon" href="/images/favicon.webp"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/insight.css"><link rel="stylesheet" href="/css/search.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><link href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/KaTeX/0.10.2/katex.min.css" rel="stylesheet"><meta name="generator" content="Hexo 6.2.0"></head><body><div class="page-top animated fadeInDown"><div class="nav"><li> <a href="/">首页</a></li><li> <a href="/archives">归档</a></li><li> <a href="/tags">标签</a></li><li> <a href="/about">关于</a></li><li> <a href="/links">友链</a></li></div><div class="information"><div class="nav_right_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li><li><a class="fa fa-search" onclick="openWindow();"></a></li></div><div class="avatar"><img src="/images/pic.jpg"></div></div></div><div class="sidebar animated fadeInDown"><div class="sidebar-top"><div class="logo-title"><div class="title"><img src="/images/pic.jpg" style="width:220px;" alt="favicon"><h3 title=""><a href="/">Ahh's blog</a></h3><div class="description"><p>程序员对世界说，我学编程都是为了你好</p></div></div><ul class="social-links"><li><a href="mailto:wxhxyyzm@163.com"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="https://weibo.com/u/3042191792"><i class="fa fa-weibo"></i></a></li></ul></div><details class="ltr" open><summary>目录</summary><div class="tocmenu"><p><ol class="toclist"><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%89%8D%E9%9D%A2-%E9%81%97%E7%95%99%E9%97%AE%E9%A2%98"><span class="toclist-number">1.</span> <span class="toclist-text"> 写在最前面-遗留问题</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E5%9B%BE%E5%BA%8A%E9%97%AE%E9%A2%98"><span class="toclist-number">1.1.</span> <span class="toclist-text"> 图床问题</span></a></li></ol></li><li class="toclist-item toclist-level-2"><a class="toclist-link" href="#github%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E5%92%8C%E7%BB%91%E5%AE%9A"><span class="toclist-number">2.</span> <span class="toclist-text"> GitHub仓库管理和绑定</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E4%BD%BF%E7%94%A8-https%E8%BF%9E%E6%8E%A5%E5%88%B0-github"><span class="toclist-number">2.1.</span> <span class="toclist-text"> 使用 HTTPS连接到 GitHub</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E4%BD%BF%E7%94%A8-ssh%E8%BF%9E%E6%8E%A5%E5%88%B0-github"><span class="toclist-number">2.2.</span> <span class="toclist-text"> 使用 SSH连接到 GitHub</span></a></li><li class="toclist-item toclist-level-3"><a class="toclist-link" href="#%E9%97%AE%E9%A2%98"><span class="toclist-number">2.3.</span> <span class="toclist-text"> 问题</span></a><ol class="toclist-child"><li class="toclist-item toclist-level-4"><a class="toclist-link" href="#%E5%AF%86%E9%92%A5%E9%97%AE%E9%A2%98"><span class="toclist-number">2.3.1.</span> <span class="toclist-text"> 密钥问题</span></a></li><li class="toclist-item toclist-level-4"><a class="toclist-link" href="#%E5%88%86%E6%94%AF%E9%97%AE%E9%A2%98"><span class="toclist-number">2.3.2.</span> <span class="toclist-text"> 分支问题</span></a></li><li class="toclist-item toclist-level-4"><a class="toclist-link" href="#%E4%BB%A3%E7%90%86%E9%97%AE%E9%A2%98"><span class="toclist-number">2.3.3.</span> <span class="toclist-text"> 代理问题</span></a></li></ol></li></ol></li></ol></p></div></details></div><div class="footer"><div class="p"> <span> 全站CC-BY-SA-3.0 </span><i class="fa fa-star"></i><span> Ahh</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><span>Anatolo </span></div><div class="beian"></div><script src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.13.8/mermaid.min.js"></script></div></div><div class="main"><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>博客遗留问题+GitHub仓库管理问题</a></h3></div><div class="post-content"><p><p>乱七八糟的问题们</p>
+<span id="more"></span>
+<h2 id="写在最前面-遗留问题"><a class="markdownIt-Anchor" href="#写在最前面-遗留问题"></a> 写在最前面-遗留问题</h2>
+<p>笑死，博客又很久不更新了，最近在写一个web的作业，想着要不放到GitHub上去吧，把git又拾起来看一下。然后更新网页的时候忘记博客怎么上传了。。。</p>
+<p>想了很久，想起来原来我是建立在hexo上的啊！（甚至忘了当时怎么建站的了…看来笔记还是很重要的）不是git语法 那就顺便在这里记一下 省的每次都搜</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo s //预览 hexo server</span><br><span class="line">hexo g //生成静态文件 hexo generate</span><br><span class="line">hexo d //部署上去 hexo deploy</span><br><span class="line">hexo n &lt;文件名&gt; //生成新的博文</span><br></pre></td></tr></table></figure>
+<h3 id="图床问题"><a class="markdownIt-Anchor" href="#图床问题"></a> 图床问题</h3>
+<p>之前打igem的时候其实就遇到过图床问题。不过后来发现官方那边给配好了图床，还挺好用的，于是又搁置了。</p>
+<p>今天登陆picgo发现我竟然把图床配好了，实在是很神奇，已经想不起来怎么配的了…</p>
+<p>测试一下：</p>
+<p><img src="https://gitee.com/wxhxyyzm/pic/raw/master/20231102194340.png" alt="测试一下" /></p>
+<p>竟然可以用（？ 不是说有防盗链问题吗</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/luolaihua2018/article/details/122350976">参考链接</a></p>
+<p>太好用了。。相比之下我之前我把图片传到CSDN的博客，拿CSDN当图床也太蠢了</p>
+<h2 id="github仓库管理和绑定"><a class="markdownIt-Anchor" href="#github仓库管理和绑定"></a> GitHub仓库管理和绑定</h2>
+<p>其实之前用gitlab的时候弄过一下子，但是我又忘了（阿巴阿巴</p>
+<p>首先因为我是直接在本地<code>git init</code>建好项目</p>
+<p>随后又在GitHub上搭建仓库（不是空的，自带了readme）</p>
+<p>所以出现了版本打架问题</p>
+<p>其实如果先在GitHub上建好仓库，直接git clone到本地就好了</p>
+<h3 id="使用-https连接到-github"><a class="markdownIt-Anchor" href="#使用-https连接到-github"></a> 使用 HTTPS连接到 GitHub</h3>
+<p>仓库的url在这里</p>
+<p><img src="https://gitee.com/wxhxyyzm/pic/raw/master/image-20231102201411397.png" alt="url" /></p>
+<p>按照以下步骤：</p>
+<ul>
+<li>
+<p>使用 <code>git add</code> 命令将文件添加到 Git 仓库的暂存区。</p>
+</li>
+<li>
+<p>使用 <code>git commit</code> 命令来提交暂存区的更改到本地仓库，同时附带一条提交信息，例如：<code>git commit -m &quot;Initial commit&quot;</code></p>
+</li>
+<li>
+<p>使用以下命令将本地仓库与 GitHub 仓库关联，并将本地更改推送到 GitHub 仓库。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/wxhxyyzm/tospeech.git</span><br><span class="line">git branch -M main</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>当时有个问题，就是最后<code>git push</code>的时候报错<code>fatal: unable to access 'https://github.com/wxhxyyzm/tospeech/': Failed to connect to github.com port 443 after 21076 ms: Timed out</code></p>
+<p>说是网络和代理有问题，当时没仔细检查，就直接换了<strong>使用 SSH 访问</strong></p>
+<h3 id="使用-ssh连接到-github"><a class="markdownIt-Anchor" href="#使用-ssh连接到-github"></a> 使用 SSH连接到 GitHub</h3>
+<p>步骤如下：</p>
+<ol>
+<li>
+<p><strong>生成 SSH 密钥</strong>：</p>
+<ul>
+<li>
+<p>打开命令行终端。</p>
+</li>
+<li>
+<p>运行以下命令生成 SSH 密钥对：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t ed25519 -C wxhxyyzm@163.com</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>在上述命令中，邮箱就是在 GitHub 上注册的电子邮件地址。</p>
+</li>
+<li>
+<p>默认情况下，SSH 密钥将保存在用户主目录的 <code>.ssh</code> 文件夹中。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>添加 SSH 密钥到 SSH 代理</strong>：</p>
+<ul>
+<li>
+<p>使用 SSH 代理，可以运行以下命令来将 SSH 密钥添加到代理，以便无需每次输入密码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-add ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>添加公钥到 GitHub 帐户</strong>：</p>
+<ul>
+<li>
+<p>复制公钥，可以使用以下命令来将公钥内容复制到剪贴板：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clip &lt; ~/.ssh/id_ed25519.pub</span><br></pre></td></tr></table></figure>
+<p>或者直接找到文件用txt打开，复制粘贴</p>
+</li>
+<li>
+<p>登录到GitHub 帐户。</p>
+</li>
+<li>
+<p>在右上角点击头像，然后选择 “Settings”。</p>
+</li>
+<li>
+<p>在左侧边栏中，选择 “SSH and GPG keys”。</p>
+</li>
+<li>
+<p>点击 “New SSH key”。</p>
+</li>
+<li>
+<p>在 “Key” 字段中，粘贴公钥内容。</p>
+</li>
+<li>
+<p>给密钥一个描述（Title），以便识别。</p>
+</li>
+<li>
+<p>点击 “Add SSH key”。</p>
+</li>
+</ul>
+<p>如图：</p>
+<p><img src="https://gitee.com/wxhxyyzm/pic/raw/master/image-20231102202245938.png" alt="ssh" /></p>
+</li>
+<li>
+<p><strong>使用 SSH URL 连接到 GitHub</strong>：</p>
+<ul>
+<li>
+<p>在GitHub 仓库页面上，找到 SSH URL。(在HTTPS旁边)</p>
+</li>
+<li>
+<p>使用以下命令将本地仓库与 GitHub 仓库关联，并将本地更改推送到 GitHub 仓库。确保替换 <code>&lt;GitHub SSH URL&gt;</code> 为 GitHub 仓库 SSH URL：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bashCopy codegit remote add origin &lt;GitHub SSH URL&gt;</span><br><span class="line">git branch -M main  # 如果你的默认分支是 main</span><br><span class="line">git push -u origin main  # 如果你的默认分支是 main</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<p>现在，项目将使用 SSH 连接到 GitHub，而不是 HTTPS。</p>
+<p>以上是GPT写的办法，步骤中有一些bug，还有这个<a target="_blank" rel="noopener" href="https://blog.csdn.net/SCDS_Zyx/article/details/122954304">参考链接</a></p>
+<h3 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题</h3>
+<h4 id="密钥问题"><a class="markdownIt-Anchor" href="#密钥问题"></a> 密钥问题</h4>
+<p>有这样的报错信息<code>C:\Users\wxhxy&gt;ssh-add ~/.ssh/id_ed25519 Error connecting to agent: No such file or directory</code></p>
+<p>发现是没启动代理（存疑），我之前明明设置的都没问题</p>
+<p>解决办法如下：</p>
+<p>在Windows上，可以使用以下方式来启动SSH代理并添加SSH密钥：</p>
+<ol>
+<li>
+<p><strong>启动SSH代理</strong>：</p>
+<p>打开一个Git Bash或Windows命令提示符窗口，并执行以下命令来启动SSH代理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval $(ssh-agent)</span><br></pre></td></tr></table></figure>
+<p>或者，如果使用Windows命令提示符，可以使用以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-agent</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>添加SSH密钥</strong>：</p>
+<p>在同一终端窗口中，执行以下命令来添加SSH密钥：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-add ~/.ssh/id_ed25519</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>确保已经在正确的目录中，<code>~/.ssh/id_ed25519</code> 是SSH私钥的路径。如果在执行命令时遇到问题，请检查SSH密钥的路径是否正确，确保文件存在。</p>
+<h4 id="分支问题"><a class="markdownIt-Anchor" href="#分支问题"></a> 分支问题</h4>
+<p>这一块我遇到一堆问题 检查自己的url没问题</p>
+<p>报错</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">D:\ABOUT\大三\人机交互\ToSpeech&gt;git push</span><br><span class="line">fatal: The current branch main has no upstream branch.</span><br><span class="line">To push the current branch and set the remote as upstream, use</span><br><span class="line"></span><br><span class="line">    git push --set-upstream origin main</span><br><span class="line"></span><br><span class="line">To have this happen automatically for branches without a tracking</span><br><span class="line">upstream, see &#x27;push.autoSetupRemote&#x27; in &#x27;git help config&#x27;</span><br></pre></td></tr></table></figure>
+<p>解决办法：</p>
+<p>这个错误消息表明 Git 发现当前的分支 <code>main</code> 没有与远程分支关联。为了解决这个问题，可以按照建议使用 <code>--set-upstream</code> 选项将本地分支与远程分支关联起来，并推送更改到远程仓库。执行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --set-upstream origin main</span><br></pre></td></tr></table></figure>
+<p>这将把 <code>main</code> 分支与 <code>origin</code> 远程分支关联起来，并将本地分支更改推送到远程仓库。之后，可以使用 <code>git push</code> 来推送更改，不再需要指定 <code>--set-upstream</code> 选项。</p>
+<p>继续报错</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">D:\ABOUT\大三\人机交互\ToSpeech&gt;git push --set-upstream origin main</span><br><span class="line">To github.com:wxhxyyzm/tospeech.git</span><br><span class="line"> ! [rejected]        main -&gt; main (fetch first)</span><br><span class="line">error: failed to push some refs to &#x27;github.com:wxhxyyzm/tospeech.git&#x27;</span><br><span class="line">hint: Updates were rejected because the remote contains work that you do</span><br><span class="line">hint: not have locally. This is usually caused by another repository pushing</span><br><span class="line">hint: to the same ref. You may want to first integrate the remote changes</span><br><span class="line">hint: (e.g., &#x27;git pull ...&#x27;) before pushing again.</span><br><span class="line">hint: See the &#x27;Note about fast-forwards&#x27; in &#x27;git push --help&#x27; for details</span><br></pre></td></tr></table></figure>
+<p>说是表明本地分支 <code>main</code> 与远程分支存在冲突，后面试了几个办法都有问题</p>
+<p>后来找到解决办法就是之前说的版本问题</p>
+<p>因为我在本地项目里面安装过一些包了，同时远程仓库又有readme，不是空的</p>
+<p>解决办法就是强制合并</p>
+<p><code>git pull --allow-unrelated-histories</code></p>
+<p>不知道中间进行了什么奇怪的操作，导致分支起点不一样了，就很见鬼。</p>
+<p>这样<code>git pull</code>之后再<code>git push</code>，就没问题了</p>
+<p><img src="https://gitee.com/wxhxyyzm/pic/raw/master/image-20231102204014952.png" alt="image-20231102204014952" /></p>
+<p>泪目，怎么有人愚蠢的问题一而再再而三的搞不明白</p>
+<h4 id="代理问题"><a class="markdownIt-Anchor" href="#代理问题"></a> 代理问题</h4>
+<p>基本上和这个博客说的差不多<a target="_blank" rel="noopener" href="https://blog.csdn.net/Wrysmile0308/article/details/128801870">参考链接</a></p>
+<p>应该就是挂梯子的问题，反正后来没搞明白，直接把梯子关了，就好了</p>
+<p>（计网学了和没学一样 感觉很多东西都比较迷糊</p>
+<p><strong>我的评价：不如GPT 人工智能什么时候把我优化掉</strong></p>
+</p></div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2023-11-02</span><i class="fa fa-tag"></i><a class="tag" href="/tags/note/" title="note">note </a><span class="leancloud_visitors"></span><span>大约1927个字, 6分钟25秒读完</span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://wxhxyyzm.github.io/2023/11/02/git02/,Ahh's blog,博客遗留问题+GitHub仓库管理问题,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="next pagbuttons"><a class="btn" role="navigation" href="/2023/05/12/git/" title="git版本管理+GitHub/GitLab教程">下一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'H0VO204MWoxwKbBGEHeez2oX-gzGzoHsz',
+  app_key:'hFyVWhXHYgVmaKMGWHzhEZcZ',
+  placeholder:'Ahh终于更新了',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'retro'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script>(function(window){var INSIGHT_CONFIG={TRANSLATION:{POSTS:"文章",PAGES:"页面",CATEGORIES:"分类",TAGS:"标签",UNTITLED:"(无标题)",},CONTENT_URL:"/content.json",};window.INSIGHT_CONFIG=INSIGHT_CONFIG})(window);</script><script src="/js/insight.js" defer></script><div class="searchbox ins-search"><div class="searchbox-container ins-search-container"><div class="searchbox-input-wrapper"><input class="searchbox-input ins-search-input" type="text" placeholder="想要查找什么..."><span class="searchbox-close"><a class="fa fa-times-circle" onclick="closeWindow();"></a></span></div><div class="searchbox-result-wrapper ins-section-wrapper"><div class="ins-section-container"><p>Seraching...</p></div></div></div></div></body></html>
